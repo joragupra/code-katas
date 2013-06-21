@@ -33,6 +33,11 @@ public class BowlingGameTest extends TestCase {
 		assertEquals(16, g.score());
 	}
 
+	public void testPerfectGame() {
+		rollMany(12, 10);
+		assertEquals(300, g.score());
+	}
+
 	public void testOneStrike() {
 		rollStrike();
 		g.roll(3);
