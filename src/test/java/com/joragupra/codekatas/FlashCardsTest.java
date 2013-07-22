@@ -31,7 +31,11 @@ public class FlashCardsTest extends TestCase {
 	}
 
 	private void play(String question, User user) {
-		user.notify( (user.ask(question) == "Inferno") ? "Correct." : "Wrong. The right answer is 'Inferno'.");
+		play(question, user, "Inferno");
+	}
+
+	private void play(String question, User user, String rightAnswer) {
+		user.notify( (rightAnswer == user.ask(question)) ? "Correct." : "Wrong. The right answer is 'Inferno'.");
 		user.ask(question);
 	}
 
@@ -52,8 +56,8 @@ public class FlashCardsTest extends TestCase {
 	}
 
 	public void testAnotherCorrectAnswerIsConfirmed() {
-		User user = User.whoAnswers("laser");
-		play("What tower is best against racers?", user);
+		User user = User.whoAnswers("Laser");
+		play("What tower is best against racers?", user, "Laser");
 		assertEquals("Correct.", user.lastConfirmationReceived());
 	}
 }
