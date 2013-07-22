@@ -1,5 +1,6 @@
 package com.joragupra.vending;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,11 +9,19 @@ import java.util.List;
  */
 public class Machine {
 
-	public void insert(Coin coin) {
+	private List<Coin> insertedCoins;
 
+	public Machine() {
+		insertedCoins = new ArrayList<Coin>();
+	}
+
+	public void insert(Coin coin) {
+		insertedCoins.add(coin);
 	}
 
 	public List<Coin> returnCoins() {
-		return null;
+		List<Coin> coins = new ArrayList<Coin>(insertedCoins);
+		insertedCoins = new ArrayList<Coin>();
+		return coins;
 	}
 }
