@@ -104,4 +104,16 @@ public class FlashCardsTest extends TestCase {
 			card.play(user);
 		}
 	}
+
+	public void testAnswersCanDifferInCase() {
+		User user = User.whoAnswers("concussion");
+		play(user, new FlashCard(QUESTION_ON_GROUP_DEFENSE, "Concussion"));
+		assertEquals("Correct.", user.lastConfirmationReceived());
+	}
+
+	public void testAnswersCanHaveLeadingOrTrailingSpaces() {
+		User user = User.whoAnswers("  concussion ");
+		play(user, new FlashCard(QUESTION_ON_GROUP_DEFENSE, "Concussion"));
+		assertEquals("Correct.", user.lastConfirmationReceived());
+	}
 }
