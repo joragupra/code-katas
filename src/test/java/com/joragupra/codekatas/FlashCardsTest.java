@@ -31,6 +31,7 @@ public class FlashCardsTest extends TestCase {
 	}
 
 	private void play(String question, User user) {
+		user.notify( (user.ask(question) == "Inferno") ? "Correct." : "Wrong. The right answer is 'Inferno'.");
 		user.ask(question);
 	}
 

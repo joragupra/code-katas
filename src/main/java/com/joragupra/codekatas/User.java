@@ -8,19 +8,36 @@ public class User {
 
 	private String lastQuestionAsked;
 
+	private String cannedAnswer;
+
+	private String lastConfirmationReceived;
+
+	public User() {
+		this("Inferno");
+	}
+
+	public User(String answer) {
+		this.cannedAnswer = answer;
+	}
+
 	public String lastQuestionAsked() {
 		return lastQuestionAsked;
 	}
 
-	public void ask(String question) {
+	public String ask(String question) {
 		this.lastQuestionAsked = question;
+		return cannedAnswer;
 	}
 
 	public String lastConfirmationReceived() {
-		return "Correct.";
+		return lastConfirmationReceived;
 	}
 
 	public static User whoAnswers(String answer) {
-		return null;
+		return new User(answer);
+	}
+
+	public void notify(String message) {
+		this.lastConfirmationReceived = message;
 	}
 }
