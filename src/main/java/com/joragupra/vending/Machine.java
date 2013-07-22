@@ -25,7 +25,7 @@ public class Machine {
 		return coins;
 	}
 
-	public Purchase buy(Item selectedItem) {
+	public Purchase buy(Item selectedItem) throws NotEnoughMoneyException {
 		if (hasPaidEnough(selectedItem)) {
 			return new Purchase(selectedItem, calculateChange(selectedItem));
 		}

@@ -19,7 +19,7 @@ public class VendingTest extends TestCase {
 		assertEquals(Coin.QUARTER, returnedCoins.get(1));
 	}
 
-	public void testBuyBWithExactChange() {
+	public void testBuyBWithExactChange() throws Exception {
 		Machine machine = new Machine();
 		machine.insert(Coin.QUARTER);
 		machine.insert(Coin.QUARTER);
@@ -30,12 +30,26 @@ public class VendingTest extends TestCase {
 		assertTrue(purchase.getChange().isEmpty());
 	}
 
-	public void testBuyAWithoutExactChange() {
+	public void testBuyAWithoutExactChange() throws Exception{
 		Machine machine = new Machine();
 		machine.insert(Coin.DOLLAR);
 		Purchase purchase = machine.buy(Machine.Item.A);
 		assertEquals(Machine.Item.A, purchase.getItem());
 		assertTrue(purchase.getChange().contains(Coin.DIME));
 		assertTrue(purchase.getChange().contains(Coin.QUARTER));
+	}
+
+	public void testEnoughMoneyCheckedWhenBuying() {
+		Machine machine = new Machine();
+		machine.insert(Coin.QUARTER);
+		machine.insert(Coin.QUARTER);
+		Purchase purchase = null;
+		try {
+			purchase = machine.buy(Machine.Item.A);
+		} catch (NotEnoughMoneyException e) {
+			//everything is ok
+			return;
+		}
+		fail("No exception thrown when money was not enough to buy item");
 	}
 }
