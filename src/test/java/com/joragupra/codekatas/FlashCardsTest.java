@@ -33,4 +33,10 @@ public class FlashCardsTest extends TestCase {
 	private void testUserIsAskedQuestionOnTheFlashCard(String question) {
 		assertEquals(question, this.user.lastQuestionAsked());
 	}
+
+	public void testACorrectAnswerIsConfirmed() {
+		String question = "What tower is best against swarms?";
+		play(question);
+		assertEquals("Correct.", this.user.lastConfirmationReceived());
+	}
 }

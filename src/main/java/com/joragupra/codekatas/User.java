@@ -15,4 +15,8 @@ public class User {
 	public void ask(String question) {
 		this.lastQuestionAsked = question;
 	}
+
+	public String lastConfirmationReceived() {
+		return null;
+	}
 }
