@@ -26,6 +26,5 @@ public class FlashCard {
 
 	public void play(User user) {
 		user.notify( (answer == user.ask(question)) ? "Correct." : String.format("Wrong. The right answer is '%s'.", answer));
-		user.ask(question);
 	}
 }
