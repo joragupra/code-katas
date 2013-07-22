@@ -26,16 +26,20 @@ public class Machine {
 	}
 
 	public Item getItem(Item selectedItem) {
-		double paid = 0.0;
-		for (Coin coin : insertedCoins) {
-			paid += coin.value;
-		}
-		if (paid > selectedItem.price) {
+		if (hasPaidEnough(selectedItem)) {
 			return selectedItem;
 		}
 		else {
 			return null;
 		}
+	}
+
+	private boolean hasPaidEnough(Item selectedItem) {
+		double paid = 0.0;
+		for (Coin coin : insertedCoins) {
+			paid += coin.value;
+		}
+		return (paid > selectedItem.price);
 	}
 
 	public enum Item {
