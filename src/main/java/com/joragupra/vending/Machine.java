@@ -27,27 +27,7 @@ public class Machine {
 
 	public Purchase buy(Item selectedItem) {
 		if (hasPaidEnough(selectedItem)) {
-			long changeAmount = calculatePaidAmount() - selectedItem.price;
-			List<Coin> change = new ArrayList<Coin>();
-			while (changeAmount > 0.0) {
-				if (Coin.DOLLAR.value <= changeAmount) {
-					change.add(Coin.DOLLAR);
-					changeAmount -= Coin.DOLLAR.value;
-				}
-				if (Coin.QUARTER.value <= changeAmount) {
-					change.add(Coin.QUARTER);
-					changeAmount -= Coin.QUARTER.value;
-				}
-				if (Coin.DIME.value <= changeAmount) {
-					change.add(Coin.DIME);
-					changeAmount -= Coin.DIME.value;
-				}
-				if (Coin.NICKEL.value <= changeAmount) {
-					change.add(Coin.NICKEL);
-					changeAmount -= Coin.NICKEL.value;
-				}
-			}
-			return new Purchase(selectedItem, change);
+			return new Purchase(selectedItem, calculateChange(selectedItem));
 		}
 		else {
 			return null;
@@ -64,6 +44,30 @@ public class Machine {
 			paid += coin.value;
 		}
 		return paid;
+	}
+
+	private List<Coin> calculateChange(Item selectedItem) {
+		long changeAmount = calculatePaidAmount() - selectedItem.price;
+		List<Coin> change = new ArrayList<Coin>();
+		while (changeAmount > 0.0) {
+			if (Coin.DOLLAR.value <= changeAmount) {
+				change.add(Coin.DOLLAR);
+				changeAmount -= Coin.DOLLAR.value;
+			}
+			if (Coin.QUARTER.value <= changeAmount) {
+				change.add(Coin.QUARTER);
+				changeAmount -= Coin.QUARTER.value;
+			}
+			if (Coin.DIME.value <= changeAmount) {
+				change.add(Coin.DIME);
+				changeAmount -= Coin.DIME.value;
+			}
+			if (Coin.NICKEL.value <= changeAmount) {
+				change.add(Coin.NICKEL);
+				changeAmount -= Coin.NICKEL.value;
+			}
+		}
+		return change;
 	}
 
 	public enum Item {
