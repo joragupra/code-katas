@@ -26,12 +26,10 @@ public class Machine {
 	}
 
 	public Purchase buy(Item selectedItem) throws NotEnoughMoneyException {
-		if (hasPaidEnough(selectedItem)) {
-			return new Purchase(selectedItem, calculateChange(selectedItem));
+		if (!hasPaidEnough(selectedItem)) {
+			throw new NotEnoughMoneyException();
 		}
-		else {
-			return null;
-		}
+		return new Purchase(selectedItem, calculateChange(selectedItem));
 	}
 
 	private boolean hasPaidEnough(Item selectedItem) {
