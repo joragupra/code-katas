@@ -8,10 +8,29 @@ import junit.framework.TestCase;
  */
 public class FlashCardsTest extends TestCase {
 
-	public void testUserIsAskedQuestionOnTheFlashCard() {
-		User user = new User();
-		String question = "What tower is best against swarms?";
+	private User user;
 
-		assertEquals(question, user.lastQuestionAsked());
+	public void setUp() {
+		this.user = new User();
+	}
+
+	public void testUserIsAskedQuestionAboutSwarms() {
+		String question = "What tower is best against swarms?";
+		play(question);
+		testUserIsAskedQuestionOnTheFlashCard(question);
+	}
+
+	public void testUserIsAskedQuestionAboutRacers() {
+		String question = "What tower is best against racers?";
+		play(question);
+		testUserIsAskedQuestionOnTheFlashCard(question);
+	}
+
+	private void play(String question) {
+		this.user.ask(question);
+	}
+
+	private void testUserIsAskedQuestionOnTheFlashCard(String question) {
+		assertEquals(question, this.user.lastQuestionAsked());
 	}
 }

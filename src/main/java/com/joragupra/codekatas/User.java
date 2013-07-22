@@ -6,7 +6,13 @@ package com.joragupra.codekatas;
  */
 public class User {
 
+	private String lastQuestionAsked;
+
 	public String lastQuestionAsked() {
-		return "What tower is best against swarms?";
+		return lastQuestionAsked;
+	}
+
+	public void ask(String question) {
+		this.lastQuestionAsked = question;
 	}
 }
