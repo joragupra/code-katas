@@ -25,7 +25,7 @@ public class Machine {
 		return coins;
 	}
 
-	public Item getItem(Item selectedItem) {
+	public Item buy(Item selectedItem) {
 		if (hasPaidEnough(selectedItem)) {
 			return selectedItem;
 		}

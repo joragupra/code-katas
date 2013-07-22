@@ -25,7 +25,7 @@ public class VendingTest extends TestCase {
 		machine.insert(Coin.QUARTER);
 		machine.insert(Coin.QUARTER);
 		machine.insert(Coin.QUARTER);
-		Machine.Item returnedItem = machine.getItem(Machine.Item.B);
+		Machine.Item returnedItem = machine.buy(Machine.Item.B);
 		assertEquals(Machine.Item.B, returnedItem);
 	}
 }
