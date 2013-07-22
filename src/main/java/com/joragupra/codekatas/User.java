@@ -7,6 +7,6 @@ package com.joragupra.codekatas;
 public class User {
 
 	public String lastQuestionAsked() {
-		return null;
+		return "What tower is best against swarms?";
 	}
 }
