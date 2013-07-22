@@ -17,6 +17,6 @@ public class User {
 	}
 
 	public String lastConfirmationReceived() {
-		return null;
+		return "Correct.";
 	}
 }
