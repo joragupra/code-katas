@@ -39,17 +39,29 @@ public class VendingTest extends TestCase {
 		assertTrue(purchase.getChange().contains(Coin.QUARTER));
 	}
 
-	public void testEnoughMoneyCheckedWhenBuying() {
+	public void testEnoughMoneyCheckedWhenBuying() throws Exception {
 		Machine machine = new Machine();
 		machine.insert(Coin.QUARTER);
 		machine.insert(Coin.QUARTER);
-		Purchase purchase = null;
 		try {
-			purchase = machine.buy(Machine.Item.A);
+			machine.buy(Machine.Item.A);
 		} catch (NotEnoughMoneyException e) {
 			//everything is ok
 			return;
 		}
 		fail("No exception thrown when money was not enough to buy item");
+	}
+
+	public void testProductAvailableWhenBuying() throws Exception {
+		Machine machine = new Machine();
+		machine.service(Machine.Item.A, 0L);
+		machine.insert(Coin.DOLLAR);
+		try {
+			machine.buy(Machine.Item.A);
+		} catch (ProductNotAvailableException e) {
+			//everything is ok
+			return;
+		}
+		fail("No exception thrown when product was not available");
 	}
 }

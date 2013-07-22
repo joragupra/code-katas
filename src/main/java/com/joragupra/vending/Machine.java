@@ -1,7 +1,9 @@
 package com.joragupra.vending;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jagudo
@@ -9,10 +11,20 @@ import java.util.List;
  */
 public class Machine {
 
+	private Map<Item, Long> availableItems;
+
 	private List<Coin> insertedCoins;
 
 	public Machine() {
 		insertedCoins = new ArrayList<Coin>();
+		setupTestMode();
+	}
+
+	private void setupTestMode() {
+		availableItems = new HashMap<Item, Long>();
+		availableItems.put(Item.A, 1000L);
+		availableItems.put(Item.B,  1000L);
+		availableItems.put(Item.C, 1000L);
 	}
 
 	public void insert(Coin coin) {
@@ -25,7 +37,7 @@ public class Machine {
 		return coins;
 	}
 
-	public Purchase buy(Item selectedItem) throws NotEnoughMoneyException {
+	public Purchase buy(Item selectedItem) throws NotEnoughMoneyException, ProductNotAvailableException {
 		if (!hasPaidEnough(selectedItem)) {
 			throw new NotEnoughMoneyException();
 		}
@@ -66,6 +78,10 @@ public class Machine {
 			}
 		}
 		return change;
+	}
+
+	public void service(Item item, Long availability) {
+		availableItems.put(item, availability);
 	}
 
 	public enum Item {
