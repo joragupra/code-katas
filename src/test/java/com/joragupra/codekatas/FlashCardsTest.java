@@ -27,7 +27,11 @@ public class FlashCardsTest extends TestCase {
 	}
 
 	private void play(String question) {
-		this.user.ask(question);
+		play(question, this.user);
+	}
+
+	private void play(String question, User user) {
+		user.ask(question);
 	}
 
 	private void testUserIsAskedQuestionOnTheFlashCard(String question) {
@@ -38,5 +42,11 @@ public class FlashCardsTest extends TestCase {
 		String question = "What tower is best against swarms?";
 		play(question);
 		assertEquals("Correct.", this.user.lastConfirmationReceived());
+	}
+
+	public void testAWrongAnswerIsCorrected() {
+		User user = User.whoAnswers("laser");
+		play("What tower is best against swarms?", user);
+		assertEquals("Wrong. The right answer is 'Inferno'.", user.lastConfirmationReceived());
 	}
 }

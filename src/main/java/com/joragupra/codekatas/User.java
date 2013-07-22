@@ -19,4 +19,8 @@ public class User {
 	public String lastConfirmationReceived() {
 		return "Correct.";
 	}
+
+	public static User whoAnswers(String answer) {
+		return null;
+	}
 }
