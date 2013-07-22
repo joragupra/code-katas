@@ -34,12 +34,11 @@ public class FlashCardsTest extends TestCase {
 	}
 
 	private void play(String question, User user) {
-		play(question, user, "Inferno");
+		play(user, new FlashCard(question, "Inferno"));
 	}
 
-	private void play(String question, User user, String rightAnswer) {
-		user.notify( (rightAnswer == user.ask(question)) ? "Correct." : String.format("Wrong. The right answer is '%s'.", rightAnswer));
-		user.ask(question);
+	private void play(User user, FlashCard card) {
+		card.play(user);
 	}
 
 	private void testUserIsAskedQuestionOnTheFlashCard(String question) {
@@ -60,25 +59,25 @@ public class FlashCardsTest extends TestCase {
 
 	public void testAnotherCorrectAnswerIsConfirmed() {
 		User user = User.whoAnswers("Laser");
-		play("What tower is best against racers?", user, "Laser");
+		play(user, new FlashCard(QUESTION_RACER_DEFENSE, "Laser"));
 		assertEquals("Correct.", user.lastConfirmationReceived());
 	}
 
 	public void testAnotherWrongAnswerIsCorrected() {
 		User user = User.whoAnswers("Inferno");
-		play(QUESTION_RACER_DEFENSE, user, "Laser");
+		play(user, new FlashCard(QUESTION_RACER_DEFENSE, "Laser"));
 		assertEquals("Wrong. The right answer is 'Laser'.", user.lastConfirmationReceived());
 	}
 
 	public void testPlayTwoCards() {
 		User user = User.whoAnswers("Laser");
-		play(QUESTION_RACER_DEFENSE, "Laser", QUESTION_ON_GROUP_DEFENSE, "Concussion", user);
+		play(user, new FlashCard(QUESTION_RACER_DEFENSE, "Laser"), new FlashCard(QUESTION_ON_GROUP_DEFENSE, "Concussion"));
 		assertEquals("Correct.", user.confirmationsReceived().get(0));
 		assertEquals("Wrong. The right answer is 'Concussion'.", user.confirmationsReceived().get(1));
 	}
 
-	private void play(String question1, String answer1, String question2, String answer2, User user) {
-		play(question1, user, answer1);
-		play(question2, user, answer2);
+	private void play(User user, FlashCard card1, FlashCard card2) {
+		play(user, card1);
+		play(user, card2);
 	}
 }
