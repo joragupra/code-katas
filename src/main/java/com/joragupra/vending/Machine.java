@@ -27,11 +27,7 @@ public class Machine {
 
 	public Purchase buy(Item selectedItem) {
 		if (hasPaidEnough(selectedItem)) {
-			long paid = 0;
-			for (Coin coin : insertedCoins) {
-				paid += coin.value;
-			}
-			long changeAmount = paid - selectedItem.price;
+			long changeAmount = calculatePaidAmount() - selectedItem.price;
 			List<Coin> change = new ArrayList<Coin>();
 			while (changeAmount > 0.0) {
 				if (Coin.DOLLAR.value <= changeAmount) {
@@ -59,11 +55,15 @@ public class Machine {
 	}
 
 	private boolean hasPaidEnough(Item selectedItem) {
+		return (calculatePaidAmount() >= selectedItem.price);
+	}
+
+	private long calculatePaidAmount() {
 		long paid = 0;
 		for (Coin coin : insertedCoins) {
 			paid += coin.value;
 		}
-		return (paid >= selectedItem.price);
+		return paid;
 	}
 
 	public enum Item {
