@@ -24,4 +24,12 @@ public class Machine {
 		insertedCoins = new ArrayList<Coin>();
 		return coins;
 	}
+
+	public Item getItem(Item selectedItem) {
+		return null;
+	}
+
+	public enum Item {
+		A,B,C
+	}
 }

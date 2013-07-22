@@ -18,4 +18,14 @@ public class VendingTest extends TestCase {
 		assertEquals(Coin.QUARTER, returnedCoins.get(0));
 		assertEquals(Coin.QUARTER, returnedCoins.get(1));
 	}
+
+	public void testBuyBWithExactChange() {
+		Machine machine = new Machine();
+		machine.insert(Coin.QUARTER);
+		machine.insert(Coin.QUARTER);
+		machine.insert(Coin.QUARTER);
+		machine.insert(Coin.QUARTER);
+		Machine.Item returnedItem = machine.getItem(Machine.Item.B);
+		assertEquals(Machine.Item.B, returnedItem);
+	}
 }
