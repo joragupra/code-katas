@@ -25,6 +25,10 @@ public class FlashCard {
 	}
 
 	public void play(User user) {
-		user.notify( (answer == user.ask(question)) ? "Correct." : String.format("Wrong. The right answer is '%s'.", answer));
+		user.notify( (caseInsensitiveEquals(user.ask(question).trim()) ? "Correct." : String.format("Wrong. The right answer is '%s'.", answer)));
+	}
+
+	private boolean caseInsensitiveEquals(String answerFromUser) {
+		return this.answer.trim().toLowerCase().equals(answerFromUser.toLowerCase());
 	}
 }
