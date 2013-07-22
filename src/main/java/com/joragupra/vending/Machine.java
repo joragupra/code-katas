@@ -51,6 +51,7 @@ public class Machine {
 		if (!hasPaidEnough(selectedItem)) {
 			throw new NotEnoughMoneyException();
 		}
+		availableItems.put(selectedItem, availableItems.get(selectedItem) - 1);
 		return new Purchase(selectedItem, calculateChange(selectedItem));
 	}
 

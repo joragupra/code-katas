@@ -78,4 +78,19 @@ public class VendingTest extends TestCase {
 		}
 		fail("No exception thrown when available coins were not enough for change");
 	}
+
+	public void testProductsRunOut() throws Exception{
+		Machine machine = new Machine();
+		machine.service(Machine.Item.A, 1L);
+		machine.insert(Coin.DOLLAR);
+		machine.buy(Machine.Item.A);
+		try {
+			machine.insert(Coin.DOLLAR);
+			machine.buy(Machine.Item.A);
+		} catch (ProductNotAvailableException e) {
+			//everything is ok
+			return;
+		}
+		fail("No exception thrown when product was not available");
+	}
 }
