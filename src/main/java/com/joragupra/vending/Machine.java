@@ -75,22 +75,22 @@ public class Machine {
 		List<Coin> change = new ArrayList<Coin>();
 		while (changeAmount > 0) {
 			boolean coinSelected = false;
-			if (Coin.DOLLAR.value <= changeAmount && availableCoins.get(Coin.DOLLAR)>0) {
+			if (canUseCoinForChange(Coin.DOLLAR, changeAmount)) {
 				change.add(Coin.DOLLAR);
 				changeAmount -= Coin.DOLLAR.value;
 				coinSelected = true;
 			}
-			if (Coin.QUARTER.value <= changeAmount && availableCoins.get(Coin.QUARTER)>0) {
+			if (canUseCoinForChange(Coin.QUARTER, changeAmount)) {
 				change.add(Coin.QUARTER);
 				changeAmount -= Coin.QUARTER.value;
 				coinSelected = true;
 			}
-			if (Coin.DIME.value <= changeAmount && availableCoins.get(Coin.DIME)>0) {
+			if (canUseCoinForChange(Coin.DIME, changeAmount)) {
 				change.add(Coin.DIME);
 				changeAmount -= Coin.DIME.value;
 				coinSelected = true;
 			}
-			if (Coin.NICKEL.value <= changeAmount && availableCoins.get(Coin.NICKEL)>0) {
+			if (canUseCoinForChange(Coin.NICKEL, changeAmount)) {
 				change.add(Coin.NICKEL);
 				changeAmount -= Coin.NICKEL.value;
 				coinSelected = true;
@@ -100,6 +100,10 @@ public class Machine {
 			}
 		}
 		return change;
+	}
+
+	private boolean canUseCoinForChange(Coin coin, long changeAmount) {
+		return coin.value <= changeAmount && availableCoins.get(coin)>0;
 	}
 
 	public void service(Item item, Long availability) {
