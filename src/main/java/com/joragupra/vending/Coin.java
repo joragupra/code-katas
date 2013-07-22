@@ -5,5 +5,11 @@ package com.joragupra.vending;
  * @since 22.07.13
  */
 public enum Coin {
-	NICKEL,DIME,QUARTER,DOLLAR
+	NICKEL(0.05),DIME(0.10),QUARTER(0.25),DOLLAR(1.00);
+
+	double value;
+
+	Coin(double value) {
+		this.value = value;
+	}
 }

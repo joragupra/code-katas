@@ -26,10 +26,25 @@ public class Machine {
 	}
 
 	public Item getItem(Item selectedItem) {
-		return null;
+		double paid = 0.0;
+		for (Coin coin : insertedCoins) {
+			paid += coin.value;
+		}
+		if (paid > selectedItem.price) {
+			return selectedItem;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public enum Item {
-		A,B,C
+		A(0.65),B(1.00),C(1.50);
+
+		private double price;
+
+		Item(double price) {
+			price = price;
+		}
 	}
 }
