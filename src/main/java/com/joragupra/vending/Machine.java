@@ -38,13 +38,17 @@ public class Machine {
 	}
 
 	public Purchase buy(Item selectedItem) throws NotEnoughMoneyException, ProductNotAvailableException {
+		if (isAvailable(selectedItem)) {
+			throw new ProductNotAvailableException();
+		}
 		if (!hasPaidEnough(selectedItem)) {
 			throw new NotEnoughMoneyException();
 		}
-		if (!(availableItems.get(selectedItem)>0)) {
-			throw new ProductNotAvailableException();
-		}
 		return new Purchase(selectedItem, calculateChange(selectedItem));
+	}
+
+	private boolean isAvailable(Item selectedItem) {
+		return !(availableItems.get(selectedItem)>0);
 	}
 
 	private boolean hasPaidEnough(Item selectedItem) {
