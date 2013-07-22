@@ -41,6 +41,9 @@ public class Machine {
 		if (!hasPaidEnough(selectedItem)) {
 			throw new NotEnoughMoneyException();
 		}
+		if (!(availableItems.get(selectedItem)>0)) {
+			throw new ProductNotAvailableException();
+		}
 		return new Purchase(selectedItem, calculateChange(selectedItem));
 	}
 
