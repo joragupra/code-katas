@@ -1,5 +1,7 @@
 package com.joragupra.codekatas;
 
+import java.util.List;
+
 /**
  * @author jagudo
  * @since 22.07.13
@@ -31,6 +33,10 @@ public class User {
 
 	public String lastConfirmationReceived() {
 		return lastConfirmationReceived;
+	}
+
+	public List<String> confirmationsReceived() {
+		return null;
 	}
 
 	public static User whoAnswers(String answer) {

@@ -10,6 +10,10 @@ public class FlashCardsTest extends TestCase {
 
 	private User user;
 
+	private static final String QUESTION_RACER_DEFENSE = "What tower is best against racers?";
+
+	private static final String QUESTION_ON_GROUP_DEFENSE = "What tower is best against groups?";
+
 	public void setUp() {
 		this.user = new User();
 	}
@@ -21,9 +25,8 @@ public class FlashCardsTest extends TestCase {
 	}
 
 	public void testUserIsAskedQuestionAboutRacers() {
-		String question = "What tower is best against racers?";
-		play(question);
-		testUserIsAskedQuestionOnTheFlashCard(question);
+		play(QUESTION_RACER_DEFENSE);
+		testUserIsAskedQuestionOnTheFlashCard(QUESTION_RACER_DEFENSE);
 	}
 
 	private void play(String question) {
@@ -63,7 +66,18 @@ public class FlashCardsTest extends TestCase {
 
 	public void testAnotherWrongAnswerIsCorrected() {
 		User user = User.whoAnswers("Inferno");
-		play("What tower is best against racers?", user, "Laser");
+		play(QUESTION_RACER_DEFENSE, user, "Laser");
 		assertEquals("Wrong. The right answer is 'Laser'.", user.lastConfirmationReceived());
+	}
+
+	public void testPlayTwoCards() {
+		User user = User.whoAnswers("Laser");
+		play(QUESTION_RACER_DEFENSE, "Laser", QUESTION_ON_GROUP_DEFENSE, "Concussion", user);
+		assertEquals("Correct.", user.confirmationsReceived().get(0));
+		assertEquals("Wrong. The right answer is 'Concussion'.", user.confirmationsReceived().get(1));
+	}
+
+	private void play(String question1, String answer1, String question2, String answer2, User user) {
+
 	}
 }
