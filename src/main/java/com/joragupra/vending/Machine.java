@@ -25,9 +25,9 @@ public class Machine {
 		return coins;
 	}
 
-	public Item buy(Item selectedItem) {
+	public Purchase buy(Item selectedItem) {
 		if (hasPaidEnough(selectedItem)) {
-			return selectedItem;
+			return new Purchase(selectedItem, new ArrayList<Coin>());
 		}
 		else {
 			return null;

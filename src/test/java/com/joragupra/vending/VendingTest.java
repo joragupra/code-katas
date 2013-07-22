@@ -25,7 +25,17 @@ public class VendingTest extends TestCase {
 		machine.insert(Coin.QUARTER);
 		machine.insert(Coin.QUARTER);
 		machine.insert(Coin.QUARTER);
-		Machine.Item returnedItem = machine.buy(Machine.Item.B);
-		assertEquals(Machine.Item.B, returnedItem);
+		Purchase purchase = machine.buy(Machine.Item.B);
+		assertEquals(Machine.Item.B, purchase.getItem());
+		assertTrue(purchase.getChange().isEmpty());
+	}
+
+	public void testBuyAWithoutExactChange() {
+		Machine machine = new Machine();
+		machine.insert(Coin.DOLLAR);
+		Purchase purchase = machine.buy(Machine.Item.A);
+		assertEquals(Machine.Item.A, purchase.getItem());
+		assertTrue(purchase.getChange().contains(Coin.DIME));
+		assertTrue(purchase.getChange().contains(Coin.QUARTER));
 	}
 }
