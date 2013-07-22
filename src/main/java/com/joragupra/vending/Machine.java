@@ -79,21 +79,25 @@ public class Machine {
 			if (canUseCoinForChange(Coin.DOLLAR, changeAmount)) {
 				change.add(Coin.DOLLAR);
 				changeAmount -= Coin.DOLLAR.value;
+				availableCoins.put(Coin.DOLLAR, availableCoins.get(Coin.DOLLAR) - 1);
 				coinSelected = true;
 			}
 			if (canUseCoinForChange(Coin.QUARTER, changeAmount)) {
 				change.add(Coin.QUARTER);
 				changeAmount -= Coin.QUARTER.value;
+				availableCoins.put(Coin.QUARTER, availableCoins.get(Coin.QUARTER) - 1);
 				coinSelected = true;
 			}
 			if (canUseCoinForChange(Coin.DIME, changeAmount)) {
 				change.add(Coin.DIME);
 				changeAmount -= Coin.DIME.value;
+				availableCoins.put(Coin.DIME, availableCoins.get(Coin.DIME) - 1);
 				coinSelected = true;
 			}
 			if (canUseCoinForChange(Coin.NICKEL, changeAmount)) {
 				change.add(Coin.NICKEL);
 				changeAmount -= Coin.NICKEL.value;
+				availableCoins.put(Coin.NICKEL, availableCoins.get(Coin.NICKEL) - 1);
 				coinSelected = true;
 			}
 			if (!coinSelected) {
