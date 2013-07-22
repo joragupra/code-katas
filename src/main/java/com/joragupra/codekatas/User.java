@@ -1,5 +1,6 @@
 package com.joragupra.codekatas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,12 +15,15 @@ public class User {
 
 	private String lastConfirmationReceived;
 
+	private List<String> confirmationsReceived;
+
 	public User() {
 		this("Inferno");
 	}
 
 	public User(String answer) {
 		this.cannedAnswer = answer;
+		this.confirmationsReceived = new ArrayList<String>();
 	}
 
 	public String lastQuestionAsked() {
@@ -36,7 +40,7 @@ public class User {
 	}
 
 	public List<String> confirmationsReceived() {
-		return null;
+		return confirmationsReceived;
 	}
 
 	public static User whoAnswers(String answer) {
@@ -44,6 +48,7 @@ public class User {
 	}
 
 	public void notify(String message) {
+		this.confirmationsReceived.add(message);
 		this.lastConfirmationReceived = message;
 	}
 }

@@ -78,6 +78,7 @@ public class FlashCardsTest extends TestCase {
 	}
 
 	private void play(String question1, String answer1, String question2, String answer2, User user) {
-
+		play(question1, user, answer1);
+		play(question2, user, answer2);
 	}
 }
