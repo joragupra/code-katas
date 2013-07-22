@@ -60,4 +60,10 @@ public class FlashCardsTest extends TestCase {
 		play("What tower is best against racers?", user, "Laser");
 		assertEquals("Correct.", user.lastConfirmationReceived());
 	}
+
+	public void testAnotherWrongAnswerIsCorrected() {
+		User user = User.whoAnswers("Inferno");
+		play("What tower is best against racers?", user, "Laser");
+		assertEquals("Wrong. The right answer is 'Laser'.", user.lastConfirmationReceived());
+	}
 }
