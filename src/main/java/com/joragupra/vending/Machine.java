@@ -53,8 +53,7 @@ public class Machine {
 		}
 		mergeInsertedCoinsWithAvailableCoins();
 		Purchase result = new Purchase(selectedItem, calculateChange(selectedItem));
-		availableItems.put(selectedItem, availableItems.get(selectedItem) - 1);
-		insertedCoins = new ArrayList<Coin>();
+		registerPurchase(result);
 		return result;
 	}
 
@@ -77,12 +76,6 @@ public class Machine {
 	private void mergeInsertedCoinsWithAvailableCoins() {
 		for (Coin coin : insertedCoins) {
 			availableCoins.put(coin, availableCoins.get(coin) + 1);
-		}
-	}
-
-	private void unmergeInsertedCoinsWithAvailableCoins() {
-		for (Coin coin : insertedCoins) {
-			availableCoins.put(coin, availableCoins.get(coin) - 1);
 		}
 	}
 
@@ -125,6 +118,17 @@ public class Machine {
 
 	private boolean canUseCoinForChange(Coin coin, long changeAmount) {
 		return coin.value <= changeAmount && availableCoins.get(coin)>0;
+	}
+
+	private void unmergeInsertedCoinsWithAvailableCoins() {
+		for (Coin coin : insertedCoins) {
+			availableCoins.put(coin, availableCoins.get(coin) - 1);
+		}
+	}
+
+	private void registerPurchase(Purchase purchase) {
+		availableItems.put(purchase.getItem(), availableItems.get(purchase.getItem()) - 1);
+		insertedCoins = new ArrayList<Coin>();
 	}
 
 	public void service(Item item, Long availability) {
