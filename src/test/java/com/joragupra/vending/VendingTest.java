@@ -109,4 +109,21 @@ public class VendingTest extends TestCase {
 		}
 		fail("No exception thrown when available coins were not enough for change");
 	}
+
+	public void testCoinsPaidAreUsedForCharge() throws Exception {
+		Machine machine = new Machine();
+		machine.service(Coin.NICKEL, 1L);
+		machine.service(Coin.DIME, 1L);
+		machine.service(Coin.QUARTER, 1L);
+		machine.service(Coin.DOLLAR, 1L);
+
+		machine.insert(Coin.QUARTER);
+		machine.insert(Coin.QUARTER);
+		machine.insert(Coin.QUARTER);
+		machine.buy(Machine.Item.A);
+		machine.insert(Coin.DOLLAR);
+		machine.insert(Coin.DOLLAR);
+		machine.insert(Coin.DOLLAR);
+		machine.buy(Machine.Item.C);
+	}
 }
