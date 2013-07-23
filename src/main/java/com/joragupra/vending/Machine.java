@@ -51,8 +51,11 @@ public class Machine {
 		if (!hasPaidEnough(selectedItem)) {
 			throw new NotEnoughMoneyException();
 		}
+		mergeInsertedCoinsWithAvailableCoins();
+		Purchase result = new Purchase(selectedItem, calculateChange(selectedItem));
 		availableItems.put(selectedItem, availableItems.get(selectedItem) - 1);
-		return new Purchase(selectedItem, calculateChange(selectedItem));
+		insertedCoins = new ArrayList<Coin>();
+		return result;
 	}
 
 	private boolean isAvailable(Item selectedItem) {
@@ -71,6 +74,18 @@ public class Machine {
 		return paid;
 	}
 
+	private void mergeInsertedCoinsWithAvailableCoins() {
+		for (Coin coin : insertedCoins) {
+			availableCoins.put(coin, availableCoins.get(coin) + 1);
+		}
+	}
+
+	private void unmergeInsertedCoinsWithAvailableCoins() {
+		for (Coin coin : insertedCoins) {
+			availableCoins.put(coin, availableCoins.get(coin) - 1);
+		}
+	}
+
 	private List<Coin> calculateChange(Item selectedItem) throws NotEnoughCoinsForChangeException {
 		long changeAmount = calculatePaidAmount() - selectedItem.price;
 		List<Coin> change = new ArrayList<Coin>();
@@ -82,25 +97,26 @@ public class Machine {
 				availableCoins.put(Coin.DOLLAR, availableCoins.get(Coin.DOLLAR) - 1);
 				coinSelected = true;
 			}
-			if (canUseCoinForChange(Coin.QUARTER, changeAmount)) {
+			else if (canUseCoinForChange(Coin.QUARTER, changeAmount)) {
 				change.add(Coin.QUARTER);
 				changeAmount -= Coin.QUARTER.value;
 				availableCoins.put(Coin.QUARTER, availableCoins.get(Coin.QUARTER) - 1);
 				coinSelected = true;
 			}
-			if (canUseCoinForChange(Coin.DIME, changeAmount)) {
+			else if (canUseCoinForChange(Coin.DIME, changeAmount)) {
 				change.add(Coin.DIME);
 				changeAmount -= Coin.DIME.value;
 				availableCoins.put(Coin.DIME, availableCoins.get(Coin.DIME) - 1);
 				coinSelected = true;
 			}
-			if (canUseCoinForChange(Coin.NICKEL, changeAmount)) {
+			else if (canUseCoinForChange(Coin.NICKEL, changeAmount)) {
 				change.add(Coin.NICKEL);
 				changeAmount -= Coin.NICKEL.value;
 				availableCoins.put(Coin.NICKEL, availableCoins.get(Coin.NICKEL) - 1);
 				coinSelected = true;
 			}
 			if (!coinSelected) {
+				unmergeInsertedCoinsWithAvailableCoins();
 				throw new NotEnoughCoinsForChangeException();
 			}
 		}
