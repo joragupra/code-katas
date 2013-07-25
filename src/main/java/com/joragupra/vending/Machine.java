@@ -1,9 +1,6 @@
 package com.joragupra.vending;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author jagudo
@@ -79,41 +76,35 @@ public class Machine {
 		}
 	}
 
+	private final List<Coin> coinsOrderedByValueDesc = Arrays.asList(new Coin[]{Coin.DOLLAR, Coin.QUARTER, Coin.DIME, Coin.NICKEL});
+
 	private List<Coin> calculateChange(Item selectedItem) throws NotEnoughCoinsForChangeException {
 		long changeAmount = calculatePaidAmount() - selectedItem.price;
 		List<Coin> change = new ArrayList<Coin>();
 		while (changeAmount > 0) {
-			boolean coinSelected = false;
-			if (canUseCoinForChange(Coin.DOLLAR, changeAmount)) {
-				change.add(Coin.DOLLAR);
-				changeAmount -= Coin.DOLLAR.value;
-				availableCoins.put(Coin.DOLLAR, availableCoins.get(Coin.DOLLAR) - 1);
-				coinSelected = true;
-			}
-			else if (canUseCoinForChange(Coin.QUARTER, changeAmount)) {
-				change.add(Coin.QUARTER);
-				changeAmount -= Coin.QUARTER.value;
-				availableCoins.put(Coin.QUARTER, availableCoins.get(Coin.QUARTER) - 1);
-				coinSelected = true;
-			}
-			else if (canUseCoinForChange(Coin.DIME, changeAmount)) {
-				change.add(Coin.DIME);
-				changeAmount -= Coin.DIME.value;
-				availableCoins.put(Coin.DIME, availableCoins.get(Coin.DIME) - 1);
-				coinSelected = true;
-			}
-			else if (canUseCoinForChange(Coin.NICKEL, changeAmount)) {
-				change.add(Coin.NICKEL);
-				changeAmount -= Coin.NICKEL.value;
-				availableCoins.put(Coin.NICKEL, availableCoins.get(Coin.NICKEL) - 1);
-				coinSelected = true;
-			}
-			if (!coinSelected) {
+			Coin coin = pickNextCoin(changeAmount);
+			if (coin == null) {
 				unmergeInsertedCoinsWithAvailableCoins();
 				throw new NotEnoughCoinsForChangeException();
 			}
+			else {
+				changeAmount -= coin.value;
+				change.add(coin);
+				availableCoins.put(coin, availableCoins.get(coin) - 1);
+			}
 		}
 		return change;
+	}
+
+	private Coin pickNextCoin(long changeAmount) {
+		Coin nextCoin = null;
+		for (Coin coin : coinsOrderedByValueDesc) {
+			if (canUseCoinForChange(coin, changeAmount)) {
+				nextCoin = coin;
+				break;
+			}
+		}
+		return nextCoin;
 	}
 
 	private boolean canUseCoinForChange(Coin coin, long changeAmount) {
